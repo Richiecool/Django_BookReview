@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Books home</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <!-- static css -->
+    <link rel="stylesheet" href="../static/style.css" />
+
+    <!-- google fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Concert+One&family=Architects+Daughter&family=Viga&family=Patrick+Hand&display=swap"
+        rel="stylesheet" />
+
+    <!-- Link to jQuery  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- ================= NAV ======================== -->
+    <nav id="navbar" class="navbar navbar-dark" style="background-color: white">
+
+        <div>
+            <span style="color: black; font-weight: bold; text-align: left;">Welcome</span>
+
+            <!-- =====================Sessions======================= -->
+            <span> {{ request.session.alias }} </span> </div>
+
+        <!-- ============= link for Add Book and Review ==================== -->
+
+        <form action="/loadaddreview" method="get" class="form-inline justify-content-end">
+            <button class="btn" type="submit" style=" color: blue">Add Book and Review</button>
+        </form>
+
+        <!-- =================== LOGOUT ROUTE ===================== -->
+        <form action="/logout/" method="post" class="form-inline justify-content-end">
+            {% csrf_token %}
+            <button class="btn" type="submit" style=" color: blue">Logout</button>
+        </form>
+    </nav>
+
+    <!-- ----------------------------------------------------------- -->
+
+    <div class="container">
+        <div class="row">
+
+            <!------------------------- LEFT SIDE  ----------------------->
+            <div class="col">
+                <h3>Recent Book Reviews:</h3>
+
+                <div class="row">
+                    <div class="col">
+
+                        {% for bookreview in mybookreview %}
+                        <div class="card">
+                            <div class="card-header">
+
+                              
+                             
+                                </form>
+                                <a href="/bookreview/{{ bookreview.books_review.id }}" class="btn btn-link">{{ bookreview.books_review.title }}</a>
+
+                                 
+                               
+                           
+                            </div>
+                            <div class="card-body">
+                         
+                                <p>Rating:  {{ bookreview.rating }} </p>
+                                                          
+                           
+                                <p><a href='/userreview/{{ bookreview.user_review.id }}'>{{ bookreview.user_review.alias }}</a> says: </p>
+                                     
+                               
+                             
+
+                                <p> {{ bookreview.review}} </p>
+                                <br>
+                                <br>
+                                <p> </p>
+
+                              
+                                
+                                <footer class="blockquote-footer">{{ bookreview.created_at }}</footer>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!------------------------- RIGHT SIDE  ----------------------->
+    
+            
+            <div class="col" style="text-align: center;">
+                <h3>Other Books with Reviews:</h3>
+
+
+                {% for title in books %}
+                <div class="row">
+                   
+                    <div class="col">
+
+                        <a href="/bookreview/{{ title.id }}" class="btn btn-link">{{ title.title }}</a>
+
+                <!-- <form action="/bookreview" method="post">
+
+                <input type="hidden" name="books_id" value="{{ title.id }}">
+
+                 <button type="submit" class="btn btn-link">{{ title.title }}</button>
+         
+            </form> -->
+
+                        <div data-spy="scroll" class="scrollspy list-group">
+
+                            
+
+                            <!-- LOOP THROUGH ALL BOOKS WITH REVIEWS -->
+                            <a class="list-group-item" href="#">
+
+                            </a>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+
